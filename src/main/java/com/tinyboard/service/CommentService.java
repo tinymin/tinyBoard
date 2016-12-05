@@ -16,12 +16,20 @@ public class CommentService {
     @Autowired
     CommentRepository commentRepository;
 
-    public List<Comment> findByPostId(long postId) {
-        return commentRepository.findByPostId(postId);
+    public Comment findByIdAndPostId(Long id, Long postId) {
+        return commentRepository.findByIdAndPostId(id, postId);
+    }
+
+    public List<Comment> findByPostId(Long postId) {
+        return commentRepository.findAllByPostId(postId);
     }
 
     public Comment write(CommentCreateDTO commentCreateDTO) {
         Comment comment = new Comment(commentCreateDTO.getContent(), commentCreateDTO.getAuthor(), commentCreateDTO.getPassword(), commentCreateDTO.getPostId());
         return commentRepository.save(comment);
+    }
+
+    public void delete(Comment comment) {
+        commentRepository.delete(comment);
     }
 }
